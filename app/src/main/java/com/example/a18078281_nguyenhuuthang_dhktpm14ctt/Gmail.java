@@ -6,14 +6,20 @@ public class Gmail implements Serializable {
     private String id;
     private String name;
     private String email;
-
     public Gmail() {
 
     }
-    public Gmail(String id, String name, String email) {
+
+    public Gmail(String name, String email) {
+        this.name = name;
+        this.email = email;
+
+    }
+    public Gmail(String id,String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+
     }
 
     public String getId() {
@@ -40,12 +46,7 @@ public class Gmail implements Serializable {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Gmail{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+
+
+
 }

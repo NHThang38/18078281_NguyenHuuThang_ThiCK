@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,6 +20,12 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
     int  RC_SIGN_IN = 0;
     GoogleSignInOptions gso;
@@ -25,11 +33,24 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInAccount account;
     SignInButton signInButton;
     ImageView btnRegis;
+    Button btnDangNhap;
+    EditText edtEmail, edtPasword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnDangNhap = findViewById(R.id.btnDangNhap);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtPasword = findViewById(R.id.edtEmail);
+        btnDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email;
+                String password;
+            }
+        });
 
         btnRegis = findViewById( R.id.imgRe);
         btnRegis.setOnClickListener(new View.OnClickListener() {
@@ -87,11 +108,27 @@ public class MainActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent(MainActivity.this, ManHinhScreenTransferActivity.class);
 
-            String personName = account.getDisplayName();
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
+                String personName = acct.getDisplayName();
+                String personGivenName = acct.getGivenName();
+                String personFamilyName = acct.getFamilyName();
+                String personEmail = acct.getEmail();
+
+
+//            Gmail newGmail = new Gmail(personName, personEmail, date+"");
+           Gmail newGmail = new Gmail(personName, personEmail);
+            ApiService.apiService.addGmail(newGmail).enqueue(new Callback<Gmail>() {
+                @Override
+                public void onResponse(Call<Gmail> call, Response<Gmail> response) {
+                    Toast.makeText(MainActivity.this, "Luu gmail", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Gmail> call, Throwable t) {
+
+                }
+            });
 
 
             startActivity(intent);

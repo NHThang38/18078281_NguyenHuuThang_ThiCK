@@ -31,13 +31,10 @@ public interface ApiService {
 
     @GET("taikhoan")
     Call<List<User>> getTaiKhoan();
-//
-//    @POST("bill")
-//    Call<Bill> addBill(@Body Bill bill);
-//
-//    @PUT("bill/{id}")
-//    Call<Bill> update(@Path("id") String id, @Body Bill bill);
-//
-//    @DELETE("bill/{id}")
-//    Call<Bill> delete(@Path("id") String id);
+
+
+    //them mail
+    @POST("gmail")
+    Call<Gmail> addGmail(@Body Gmail gmail);
+
 }
